@@ -1,0 +1,55 @@
+<idea-plugin>
+    <id>org.hostLauncher.plugin</id>
+    <name>HostLauncher</name>
+    <description>用户自定义本地host内容</description>
+    <version>1.0.0</version>
+    <vendor>Your Name</vendor>
+
+    <description><![CDATA[
+      通过配置host内容，可以对本地host文件进行内容追加，<br>
+      同时在java程序运行对时候添加javaagent参数。<br>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- 依赖模块 -->
+    <depends>com.intellij.modules.platform</depends>
+    <!-- 同时需要引入,否则2020版本找不到 com.intellij.psi -->
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <java.programPatcher implementation="org.host.launcher.AgentProbe"/>
+
+<!--        <toolWindow id="HostLauncher" anchor="bottom"-->
+<!--                    icon="/icons/ip-address.svg"-->
+<!--                    canCloseContents="false"-->
+<!--                    factoryClass="org.host.launcher.ui.HostToolWindowFactory"/>-->
+
+
+        <!-- 注册设置页面 -->
+        <applicationService serviceImplementation="org.host.launcher.state.MultiTextConfigState"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="org.host.launcher.setting.MultiTextConfigurable"
+                id="com.example.multitextconfig.MultiTextConfigurable"
+                displayName="HostLauncher"
+        />
+    </extensions>
+
+    <actions>
+        <!-- 注册你的 Action -->
+
+        <action    id="org.host.launcher.action.HostLauncherAction"
+                   class="org.host.launcher.action.HostLauncherAction"
+                   text="Host 配置">
+            <!-- 单个快捷键 -->
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt U"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt U"/>
+
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
+
+</idea-plugin>
