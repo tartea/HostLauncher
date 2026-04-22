@@ -13,7 +13,7 @@ repositories {
 
 // 配置 IntelliJ 插件参数
 intellij {
-    version.set("2023.3.1") // 你可以根据需要修改为你的 IDEA 版本
+    version.set("2024.3.2") // 你可以根据需要修改为你的 IDEA 版本
     type.set("IC")         // IC for Community Edition, IU for Ultimate
     plugins.set(listOf("com.intellij.java"))
 }
@@ -53,7 +53,10 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("203")
+        // 最低兼容版本（2025年推荐）
+        sinceBuild.set("243")
+        // 最高兼容版本
+        untilBuild.set("251.*")
     }
 
     signPlugin {
